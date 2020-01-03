@@ -2,9 +2,11 @@ import * as React from 'react';
 import { useTubular } from '../../src/useTubular';
 import columns from '../fixtures/columns';
 import localData from '../fixtures/localData';
+import { TubularRowComponent } from './tubularRowComponent';
 
 export const TubularComponent = () => {
     const { state, api } = useTubular(columns, localData);
+
     return (
         <>
             <div>
@@ -24,19 +26,7 @@ export const TubularComponent = () => {
                 </thead>
                 <tbody>
                     {state.data.map((row, index) => {
-                        return (
-                            <tr key={index}>
-                                {state.columns
-                                    .filter(col => col.visible)
-                                    .map(col => {
-                                        return (
-                                            <td role="cell" key={col.name}>
-                                                {row[col.name]}
-                                            </td>
-                                        );
-                                    })}
-                            </tr>
-                        );
+                        return <TubularRowComponent key={index} columns={state.columns} row={row} />;
                     })}
                 </tbody>
             </table>
